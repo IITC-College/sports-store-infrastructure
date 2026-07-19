@@ -68,7 +68,20 @@ terraform plan     # runs remotely in TFC even from a local `plan`
 
 ## After apply
 
+`enable_cluster_creator_admin_permissions` grants EKS cluster-admin to
+whoever *ran* apply — with the VCS-driven TFC workflow, that's the OIDC
+execution role (`tfc-sports-store-infrastructure`), not a human. Anyone who
+needs `kubectl` from their own machine has to grant themselves an access
+entry first (one-time, per IAM principal):
+
 ```bash
+aws eks create-access-entry --cluster-name "$(terraform output -raw cluster_name)" \
+  --principal-arn "$(aws sts get-caller-identity --query Arn --output text)" --type STANDARD
+aws eks associate-access-policy --cluster-name "$(terraform output -raw cluster_name)" \
+  --principal-arn "$(aws sts get-caller-identity --query Arn --output text)" \
+  --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy \
+  --access-scope type=cluster
+
 $(terraform output -raw configure_kubectl)
 kubectl get nodes
 kubectl get pods -n kube-system

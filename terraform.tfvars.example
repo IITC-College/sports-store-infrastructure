@@ -1,0 +1,15 @@
+# Copy to terraform.tfvars for local plans, or set the equivalent Terraform
+# variables in the Terraform Cloud workspace UI. Never commit terraform.tfvars
+# itself (see .gitignore) — it's a local convenience only, since Terraform
+# Cloud is the actual source of variable values for the VCS-driven workflow.
+
+aws_region  = "us-east-1"
+environment = "dev"
+
+cluster_name    = "sports-store-eks"
+cluster_version = "1.31"
+
+node_instance_types      = ["t3.medium"]
+node_group_desired_size  = 3
+node_group_min_size      = 2
+node_group_max_size      = 5

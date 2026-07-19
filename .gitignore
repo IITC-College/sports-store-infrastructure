@@ -1,1 +1,17 @@
-# populated in a later lab stage
+# Local Terraform working files — state lives in Terraform Cloud, never here.
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Variable files that may hold real values/credentials.
+*.tfvars
+*.tfvars.json
+!terraform.tfvars.example

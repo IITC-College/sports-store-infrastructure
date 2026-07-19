@@ -15,7 +15,7 @@ lab. No application workloads are deployed by this repo — that's Stage 5B, in
 | `variables.tf` | All configurable inputs |
 | `locals.tf` | Derived naming/AZ locals |
 | `vpc.tf` | VPC, public/private subnets, NAT Gateway, subnet tagging (`terraform-aws-modules/vpc/aws`) |
-| `eks.tf` | EKS control plane, managed node group, IRSA, cluster add-ons (`terraform-aws-modules/eks/aws`) |
+| `eks.tf` | EKS control plane, managed node group, cluster add-ons, and Pod Identity roles for workloads (`terraform-aws-modules/eks/aws`, `terraform-aws-modules/eks-pod-identity/aws`) |
 | `ecr.tf` | One ECR repository per component + lifecycle policy |
 | `outputs.tf` | Cluster/VPC/ECR outputs consumed by Stage 5B |
 
@@ -88,7 +88,7 @@ kubectl get pods -n kube-system
 ```
 
 Cluster/VPC/ECR details are available via `terraform output` for Stage 5B to
-consume (`ecr_repository_urls`, `cluster_name`, `cluster_oidc_provider_arn`,
+consume (`ecr_repository_urls`, `cluster_name`, `lb_controller_role_arn`,
 etc).
 
 ## Teardown

@@ -35,9 +35,10 @@ module "eks" {
     eks-pod-identity-agent = {
       most_recent = true
     }
-    aws-ebs-csi-driver = {
-      most_recent = true
-    }
+    # aws-ebs-csi-driver temporarily removed — recreating to clear a stale
+    # serviceAccountRoleArn left over from the IRSA->Pod Identity switch
+    # (AWS rejected the in-place update with a "Cross-account pass role"
+    # error). Re-added in the very next commit.
   }
 
   eks_managed_node_groups = {

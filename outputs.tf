@@ -33,14 +33,14 @@ output "cluster_certificate_authority_data" {
   value       = module.eks.cluster_certificate_authority_data
 }
 
-output "cluster_oidc_provider_arn" {
-  description = "ARN of the OIDC provider for the cluster, needed by future IRSA roles (e.g. AWS Load Balancer Controller in Stage 5B)."
-  value       = module.eks.oidc_provider_arn
-}
-
 output "configure_kubectl" {
   description = "Command to update the local kubeconfig to point at this cluster."
   value       = "aws eks update-kubeconfig --region ${var.aws_region} --name ${module.eks.cluster_name}"
+}
+
+output "lb_controller_role_arn" {
+  description = "IAM role ARN for the AWS Load Balancer Controller's Pod Identity association (Stage 5B)."
+  value       = module.lb_controller_pod_identity.iam_role_arn
 }
 
 output "ecr_repository_urls" {
